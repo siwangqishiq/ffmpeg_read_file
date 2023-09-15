@@ -75,7 +75,8 @@ int main(){
 
     AVFormatContext *formatContext = nullptr;
     // const char *path = "e:/assets/mv/wanzi.mp4";
-     const char *path = "d:/test.gif";
+    const char *path = "e:/assets/mv/yangshu.mp4";
+    //  const char *path = "d:/test.gif";
     
     int ret = avformat_open_input(&formatContext , path , nullptr , nullptr);
 
@@ -191,7 +192,11 @@ int main(){
     fclose(dstfile);
 
     //show ffplay command
-    
+    std::cout << "Play the output video file with the command:\n" 
+        << "ffplay -f rawvideo -pix_fmt " 
+        << av_get_pix_fmt_name(videoPixelFormat) 
+        << " -video_size " << videoWidth << "x" << videoHeight
+        << " output.yuv" << std::endl;
 
     av_free(videoDstData[0]);
     avcodec_free_context(&codecCtx);
@@ -200,72 +205,5 @@ int main(){
     return 0;
 }
 
-// int test1(){
-//     std::string congfigure;
-//     congfigure = avcodec_configuration();
-//     std::cout << congfigure << std::endl;
-
-//     avdevice_register_all();
-//     avformat_network_init();
-
-//     AVFormatContext *formatContext = nullptr;
-//     const char *path = "e://assets/mv/wanzi.mp4";
-//     int ret = avformat_open_input(&formatContext , path , nullptr , nullptr);
-    
-//     if(ret == 0){
-//         std::cout << "open file " << path << " success " <<std::endl;
-//     }else{
-//         std::cout << "open failed!! "<< std::endl;
-//         avformat_network_deinit();
-//         return -1;
-//     }
-    
-//     ret = avformat_find_stream_info(formatContext , nullptr);
-//     if(ret < 0){
-//         std::cout << "find stream info Error!"<< std::endl;
-//         avformat_network_deinit();
-//         return -1;
-//     }
-
-//     int videoStreamIndex = -1;
-//     for(int i = 0 ; i< formatContext->nb_streams ;i++){
-//         AVMediaType codecType = formatContext->streams[i]->codecpar->codec_type;
-//         std::cout << "codecType : " << codecType << std::endl;
-
-//         if(codecType == AVMediaType::AVMEDIA_TYPE_VIDEO){
-//             videoStreamIndex = i;
-//         }
-//     }//end for i
-
-//     if(videoStreamIndex < 0){
-//         std::cout << "Not found VideoStream" << std::endl;
-//         return -1;
-//     }
-
-//     AVCodecParameters *codecParams = formatContext->streams[videoStreamIndex]->codecpar;
-//     AVCodecID codecId = codecParams->codec_id;
-//     std::cout << "codecId = " << codecId << std::endl;
-    
-//     auto pDecoder = avcodec_find_decoder(codecId);
-
-//     if(pDecoder == nullptr){
-//         std::cerr << "not found decoder" << std::endl;
-//         return -1;
-//     }
-
-//     auto videoDuration = formatContext->streams[videoStreamIndex]->duration;
-//     std::cout << "videoDuration = " << videoDuration << std::endl;
-//     std::cout << "nb_frames = " << formatContext->streams[videoStreamIndex]->nb_frames << std::endl;
-
-//     av_dump_format(formatContext , 0 , nullptr , 0);
-
-//     std::cout << "read Videl file" <<std::endl;
-
-//     // AVCodecContext *pCodecContext = formatContext->streams[videoStreamIndex];
-//     // avcodec_open2(pCodecContext , pDecoder , nullptr);
-//     avformat_network_deinit();
-
-//     return 0;
-// }
 
 

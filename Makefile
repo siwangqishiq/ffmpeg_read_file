@@ -23,4 +23,4 @@ run:link
 clean:
 	rm -f ${BUILD_DIR}/*.o 
 	rm -f ${BUILD_DIR}/main.exe
-	rm -f ${BUILD_DIR}/*.yuv
+	rm -f *.yuv
